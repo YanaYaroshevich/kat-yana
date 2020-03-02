@@ -1,0 +1,43 @@
+$center-container-width: 1280px;
+$side-margins: calc((100vw - #{$center-container-width}) / 2);
+
+$top-panel-font-size: 1.5rem;
+$top-panel-padding: 1rem;
+$top-panel-height: $top-panel-font-size + 2 * $top-panel-padding;
+
+$top-panel-logo-height: 7.5rem;
+$top-panel-logo-width: 2 * $top-panel-logo-height;
+$top-panel-logo-offset: $top-panel-logo-height / 4;
+$top-panel-logo-inline-height: $top-panel-height / 1.5;
+$top-panel-logo-inline-offset: $top-panel-logo-inline-height / 4;
+
+$top-panel-logo-container-min-width: 25rem;
+$top-panel-logo-container-width: calc(#{$top-panel-logo-container-min-width} + #{$side-margins} - 1rem);
+
+$min-left-part-width: $center-container-width / 4;
+$left-part-width: calc(#{$min-left-part-width} + #{$side-margins} - 1rem);
+
+$min-right-part-width: $center-container-width - $min-left-part-width;
+$right-part-width: calc(100% - #{$left-part-width});
+
+$rounded-card-padding: 40px;
+$rounded-card-size: 460px;
+$content-container-padding: 6.875rem;
+
+$content-container-height: calc(100vh - #{$top-panel-height});
+
+$footer-font-size: 1rem;
+$footer-icon-size: 24px;
+$footer-padding: 1.5rem;
+$footer-height: calc(#{$footer-icon-size} + #{2 * $footer-padding});
+
+$ipad-pro-max-device-width: 1112px;
+$ipad-pro-min-device-width: 834px;
+$ipad-max-device-width: 1024px;
+$ipad-min-device-width: 768px;
+
+$laptop-min-width: 1224px;
+$large-screen-min-width: 1824px;
+
+$bigger-rounded-card-size: 560px;
+$content-container-padding-media: 2.5rem;

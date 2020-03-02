@@ -1,0 +1,174 @@
+@import 'vars/colors';
+@import 'vars/sizes';
+@import 'vars/fonts';
+
+:host {
+	$arrow-width: $content-container-padding;
+	display: flex;
+
+	.carousel {
+		&-text {
+			display: flex;
+			flex-direction: column;
+			padding-right: calc(#{$rounded-card-padding} - #{$arrow-width});
+			width: calc(#{$rounded-card-size} - #{$rounded-card-padding * 2});
+
+			&-container {
+				display: flex;
+			}
+
+			&-title {
+				@extend %heading;
+				color: $sub-color-violet;
+				margin: 0;
+
+				&-link {
+					cursor: alias;
+					position: relative;
+					text-decoration: none;
+
+					&.disabled {
+						cursor: default;
+					}
+				}
+
+				&-icon {
+					$icon-size: 36px;
+					background-color: $sub-color-violet;
+					display: inline-block;
+					font-size: $icon-size;
+					height: $icon-size;
+					mask: url(~assets/icons/download_pdf.svg);
+					mask-size: cover;
+					width: $icon-size;
+				}
+
+				.pdf-hint {
+					@extend %hint;
+					position: absolute;
+					top: 1rem;
+					white-space: nowrap;
+				}
+			}
+
+			&-subtitle {
+				@extend %sub-heading;
+				color: $sub-color-violet;
+				margin: 0;
+			}
+
+			&-content {
+				@extend %paragraph-text;
+				::ng-deep strong {
+					color: $sub-color-violet;
+				}
+			}
+		}
+
+		&-item {
+			align-items: center;
+			display: flex;
+			flex-direction: column;
+			max-width: $center-container-width;
+			position: relative;
+			width: calc(100% - #{$arrow-width} * 2);
+
+			&-container {
+				display: flex;
+				justify-content: center;
+				overflow: hidden;
+				position: relative;
+				width: 100%;
+			}
+
+			&-figures-container {
+				overflow: hidden;
+			}
+
+			&-image {
+				display: block;
+				flex: 1;
+				width: 50%;
+
+				&-container {
+					align-items: center;
+					display: flex;
+					flex: 1;
+					justify-content: space-between;
+					height: 100%;
+					margin: 0;
+					position: absolute;
+					top: 0;
+					width: 100%;
+
+					&.inactive {
+						display: none;
+					}
+				}
+			}
+
+			&-selector {
+				$selector-items-size: .75rem;
+				$selector-items-margins: .5rem;
+				background-color: $primary;
+				border-radius: 50%;
+				height: $selector-items-size;
+				margin: $selector-items-margins;
+				cursor: pointer;
+
+				&.inactive {
+					background-color: rgba($primary, .5);
+				}
+
+				&-container {
+					align-items: center;
+					display: flex;
+					justify-content: center;
+				}
+			}
+
+			&-switch-button {
+				$start-color: rgba(255, 255, 255, 0);
+				$end-color: rgba(255, 255, 255, .5);
+				cursor: pointer;
+				height: 100%;
+				min-width: $arrow-width;
+				position: absolute;
+				top: 0;
+				user-select: none;
+				width: calc((100vw - #{$center-container-width}) / 2);
+
+				&.next {
+					right: 0;
+
+					&:hover {
+						background: linear-gradient(90deg, $start-color, $end-color);
+					}
+				}
+
+				&.prev {
+					left: 0;
+
+					&:hover {
+						background: linear-gradient(270deg, $start-color, $end-color);
+					}
+				}
+
+				&-arrow {
+					color: white;
+					display: inline-block;
+					text-shadow: 0 0 10px black;
+					transform: scaleY(2);
+					user-select: none;
+
+					&-wrapper {
+						align-items: center;
+						display: flex;
+						justify-content: center;
+						height: 100%;
+					}
+				}
+			}
+		}
+	}
+}

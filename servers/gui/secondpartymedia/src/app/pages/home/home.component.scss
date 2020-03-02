@@ -1,0 +1,110 @@
+@import 'vars/sizes';
+@import 'vars/colors';
+@import 'vars/fonts';
+
+:host {
+	$max-responsive-width: $center-container-width;
+	$top-video-back-color: #505080;
+
+	display: block;
+
+	.content {
+		&-container {
+			align-items: center;
+			box-sizing: border-box;
+			display: flex;
+			height: $content-container-height;
+			padding: $content-container-padding;
+
+			&-inner {
+				align-items: center;
+				display: flex;
+				margin: auto;
+				max-width: $max-responsive-width;
+			}
+
+			rounded-card {
+				height: $rounded-card-size;
+				width: $rounded-card-size;
+				box-sizing: border-box;
+			}
+
+			.article-text {
+				@extend %heading;
+				flex: 1;
+				padding-right: 20px;
+			}
+
+			&.top-video-container {
+				align-items: flex-start;
+				justify-content: center;
+				overflow-x: hidden;
+				padding: 0 6.875rem 25px;
+				position: relative;
+			}
+
+			.top-video {
+				&-image {
+					box-shadow: 0 10px 25px rgba(99, 99, 99, 0.5);
+					object-fit: cover;
+					height: 100%;
+					min-width: $max-responsive-width;
+				}
+
+				&-text {
+					color: white;
+					margin: 0;
+					max-width: 60rem;
+					text-shadow: -.5px 0 20px $top-video-back-color;
+
+					&-container {
+						left: 50%;
+						max-width: $max-responsive-width;
+						position: absolute;
+						top: 70%;
+						transform: translate(-50%, -70%);
+						width: calc(100% - #{$content-container-padding * 2});
+					}
+				}
+			}
+
+			@mixin rounded-card-style($background, $text, $article-text) {
+				::ng-deep {
+					.rounded-card {
+						background: $background;
+						color: $text;
+					}
+
+					.article-text {
+						color: $article-text;
+					}
+				}
+			}
+
+			&.blue-gradient {
+				@include rounded-card-style(linear-gradient(135deg, $sub-color-blue 0%, $sub-color-violet 100%), #fff, $sub-color-blue-2);
+				background: white; // to overlap parallaxes
+			}
+
+			&.orange-gradient {
+				@include rounded-card-style(linear-gradient(135deg, $sub-color-violet 0%, $sub-color-orange 100%), #fff, $sub-color-orange);
+				background: white; // to overlap parallaxes
+			}
+
+			&.simple-white {
+				@include rounded-card-style(#fff, #000, #fff);
+				background: linear-gradient(152.02deg, $sub-color-blue 0%, $sub-color-violet 100%);
+			}
+
+			image-text-carousel {
+				height: 100%;
+				margin: auto;
+				width: 100%;
+			}
+
+			&.without-padding {
+				padding: 0;
+			}
+		}
+	}
+}

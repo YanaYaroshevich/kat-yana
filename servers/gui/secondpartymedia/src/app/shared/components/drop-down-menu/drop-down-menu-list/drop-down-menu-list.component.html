@@ -1,0 +1,4 @@
+<drop-down-menu-item class="menu-item" *ngFor="let item of items"
+	[item]="item" direction="right" [interaction]="interaction"
+	(itemClick)="itemClick.emit($event)" (itemHover)="itemHover.emit($event)" (itemHoverOut)="itemHoverOut.emit($event)">
+</drop-down-menu-item>

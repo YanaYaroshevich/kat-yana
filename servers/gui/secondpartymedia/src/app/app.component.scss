@@ -1,0 +1,57 @@
+@import 'vars/colors';
+@import 'vars/sizes';
+
+:host {
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	height: 100%;
+
+	header {
+		position: fixed;
+		width: 100%;
+		z-index: 1;
+	}
+
+	main {
+		flex: 1;
+	}
+
+	.mobile-coming-soon {
+		display: none;
+	} // todo: remove when mobile version is tested
+
+	.footer {
+		background-color: $primary;
+		color: white;
+		padding: $footer-padding 0;
+		width: 100%;
+
+		&-text, &-contact-info-item-text {
+			height: $footer-font-size;
+		}
+
+		&-contact-info {
+			align-items: center;
+			display: flex;
+			font-style: normal;
+			justify-content: space-evenly;
+
+			&-item {
+				align-items: center;
+				color: white;
+				display: flex;
+				justify-content: center;
+
+				&-text {
+					margin-left: .5rem;
+					text-decoration: none;
+				}
+
+				&-icon {
+					height: $footer-icon-size;
+				}
+			}
+		}
+	}
+}

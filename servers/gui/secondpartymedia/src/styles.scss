@@ -1,0 +1,61 @@
+@import "scss/index";
+@import "scss/responsive";
+
+/* You can add global styles to this file, and also import other style files */
+
+html,
+body {
+  height: 100%;
+  scroll-behavior: smooth;
+}
+body {
+  color: $primary-text-color;
+  margin: 0;
+  font-family: Avenir, "Helvetica Neue", sans-serif;
+  font-style: normal;
+
+  a {
+    color: $sub-color-violet;
+    text-decoration: none;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+
+  .responsive-carousel-item-container {
+    display: none;
+  }
+}
+
+#header_wrap,
+#footer_wrap {
+  display: none;
+}
+
+#main_content {
+  padding: 0 !important;
+}
+#main_content.inner {
+  position: static !important;
+  max-width: unset !important;
+  padding: 0 !important;
+  margin: 0 !important;
+}
+
+h2 {
+  background: unset;
+}
+
+#main_content_wrap {
+  border: unset !important;
+}
+
+img {
+  position: static;
+  margin: inherit;
+  max-width: unset;
+  padding: 0;
+  border: unset;
+  box-shadow: unset;
+}

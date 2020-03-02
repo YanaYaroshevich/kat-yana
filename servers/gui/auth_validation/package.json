@@ -1,0 +1,11 @@
+{
+  "name": "AMC JWT Validation Plugin",
+  "version": "1.0.0",
+  "description": "Perform End-User Authentication validation",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "ykiulo",
+  "license": "ISC"
+}

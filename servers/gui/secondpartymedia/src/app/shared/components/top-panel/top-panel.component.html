@@ -1,0 +1,85 @@
+<div class="hidden-on-small-screen large-screen-container">
+	<nav class="navigation-main-container">
+		<ng-container *ngFor="let item of testItems">
+			<ng-template #itemTemplate>
+				<div class="navigation-item navigation-main-item" [class.selected]="selectedNavGroup === item">
+					<span class="navigation-main-item-text">
+						{{item.title}}
+					</span>
+				</div>
+			</ng-template>
+
+			<a class="navigation-main-container-link" *ngIf="item.link" [routerLink]="item.link" (click)="scrollToTop()">
+				<ng-container *ngTemplateOutlet="itemTemplate"></ng-container>
+			</a>
+
+			<div *ngIf="!item.link" (click)="onItemClick(item)">
+				<ng-container *ngTemplateOutlet="itemTemplate"></ng-container>
+			</div>
+		</ng-container>
+	</nav>
+
+	<div class="expanded-content-container" [class.inline]="isLogoImageInline" [style.maxWidth]="videoWidth + 'px'">
+		<a *ngIf="isCurrentlyAtHome$ | async" class="logo-link" href="#">
+			<ng-container *ngTemplateOutlet="logo"></ng-container>
+		</a>
+
+		<a *ngIf="!(isCurrentlyAtHome$ | async)" class="logo-link" routerLink>
+			<ng-container *ngTemplateOutlet="logo"></ng-container>
+		</a>
+
+		<div class="navigation-sub-container-outer" [style.width]="maxWidthForNavGroups">
+			<ng-container *ngFor="let navGroup of navGroups">
+				<nav class="navigation-sub-container" [class.visible]="selectedNavGroup === navGroup">
+					<a *ngFor="let item of navGroup.items" class="navigation-item navigation-sub-item" (click)="goToLink(item, $event); onNavItemClick(item);">
+						<span>{{item.title}}</span>
+					</a>
+				</nav>
+			</ng-container>
+		</div>
+	</div>
+</div>
+
+<div class="hidden-on-large-screen small-screen-container">
+	<a *ngIf="isCurrentlyAtHome$ | async" class="logo-link" href="#">
+		<ng-container *ngTemplateOutlet="logo"></ng-container>
+	</a>
+
+	<a *ngIf="!(isCurrentlyAtHome$ | async)" class="logo-link" routerLink>
+		<ng-container *ngTemplateOutlet="logo"></ng-container>
+	</a>
+
+	<nav class="navigation-main-container">
+		<ng-container *ngFor="let item of testItems">
+			<ng-template #itemTemplate>
+				<div class="navigation-item navigation-main-item" [class.selected]="selectedNavGroup === item">
+					<span class="navigation-main-item-text">
+						{{item.title}}
+					</span>
+				</div>
+			</ng-template>
+
+			<a class="navigation-main-container-link" *ngIf="item.link" [routerLink]="item.link" (click)="scrollToTop()">
+				<ng-container *ngTemplateOutlet="itemTemplate"></ng-container>
+			</a>
+
+			<div *ngIf="!item.link" (click)="onItemClick(item)">
+				<ng-container *ngTemplateOutlet="itemTemplate"></ng-container>
+			</div>
+		</ng-container>
+	</nav>
+
+	<ng-container *ngFor="let navGroup of navGroups">
+		<nav class="navigation-sub-container" [class.visible]="selectedNavGroup === navGroup">
+			<a *ngFor="let item of navGroup.items" class="navigation-item navigation-sub-item" (click)="goToLink(item, $event); onNavItemClick(item);">
+				<span>{{item.title}}</span>
+			</a>
+		</nav>
+	</ng-container>
+</div>
+
+<ng-template #logo>
+	<div class="logo-container">
+		<img class="logo-image" src="assets/images/logo.jpg" alt="FreshU Logo">
+	</div>
+</ng-template>

@@ -1,0 +1,21 @@
+<a *ngIf="item.link else withoutLink" class="menu-item-link" (click)="goToLink(itemLink, $event)">
+	<ng-container *ngTemplateOutlet="innerLayout"></ng-container>
+</a>
+
+<ng-template #withoutLink>
+		<ng-container *ngTemplateOutlet="innerLayout"></ng-container>
+</ng-template>
+
+<ng-template #innerLayout>
+	<div class="menu-item-container">
+		<div class="menu-item" [class.expanded]="isExpanded || expandedChildrenCount > 0"
+			 (click)="onItemClick()" (mouseover)="onItemHover()" (mouseout)="onItemHoverOut()">
+			<span class="menu-item-title" [class.root-item-title]="isRootItem">{{item.title}}</span>
+		</div>
+
+		<drop-down-menu-list *ngIf="hasChildren && (isExpanded || expandedChildrenCount > 0)" [class]="menuListClass"
+							 [items]="item.items" [interaction]="interaction"
+							 (itemClick)="onChildItemClick($event)" (itemHover)="onChildItemHover($event)" (itemHoverOut)="onChildItemHoverOut($event)">
+		</drop-down-menu-list>
+	</div>
+</ng-template>

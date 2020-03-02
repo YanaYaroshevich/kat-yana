@@ -1,0 +1,25 @@
+<div class="container-top">
+	<img class="logo-image" src="assets/images/logo.png" alt="2nd Party Media">
+	<address class="contact-info">
+		<a class="contact-info-item" [href]="CONTACTS.E_MAIL.REAL">
+			<img class="contact-info-item-icon" [src]="'assets/icons/' + CONTACTS.E_MAIL.ICON" alt="E-mail: ">
+			<span class="contact-info-item-text">{{CONTACTS.E_MAIL.DISPLAYED}}</span>
+		</a>
+		<a class="contact-info-item" [href]="CONTACTS.PHONE_NUM.REAL">
+			<img class="contact-info-item-icon" [src]="'assets/icons/' + CONTACTS.PHONE_NUM.ICON" alt="Tel.: ">
+			<span class="contact-info-item-text">{{CONTACTS.PHONE_NUM.DISPLAYED}}</span>
+		</a>
+		<a class="contact-info-item" [href]="CONTACTS.PHYSICAL_ADDRESS.REAL">
+			<img class="contact-info-item-icon" [src]="'assets/icons/' + CONTACTS.PHYSICAL_ADDRESS.ICON" alt="Addr.: ">
+			<span class="contact-info-item-text">{{CONTACTS.PHYSICAL_ADDRESS.DISPLAYED}}</span>
+		</a>
+	</address>
+</div>
+
+<div class="container-middle">
+	<h1>COMING SOON</h1>
+</div>
+
+<div class="container-bottom">
+	Copyright © {{copyrightYear}}
+</div>

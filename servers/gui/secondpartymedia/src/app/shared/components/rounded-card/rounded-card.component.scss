@@ -1,0 +1,23 @@
+@import 'vars/colors';
+@import 'vars/sizes';
+@import 'vars/fonts';
+
+:host {
+	.rounded-card {
+		@extend %paragraph-text;
+
+		align-items: center;
+
+		box-shadow: 0 10px 25px rgba(99, 99, 99, 0.5);
+		box-sizing: border-box;
+		border-radius: 35px;
+
+		display: flex;
+		height: 100%;
+		padding: $rounded-card-padding;
+
+		overflow: hidden;
+		text-overflow: ellipsis;
+		width: 100%;
+	}
+}

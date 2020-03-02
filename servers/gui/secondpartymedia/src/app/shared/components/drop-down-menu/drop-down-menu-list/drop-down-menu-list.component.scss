@@ -1,0 +1,12 @@
+@import 'vars/colors';
+
+:host {
+	.menu-item {
+		background-color: white;
+		display: block;
+
+		&:hover {
+			background-color:  rgba($primary, .85);
+		}
+	}
+}

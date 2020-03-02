@@ -1,0 +1,79 @@
+@import 'vars/colors';
+@import 'vars/sizes';
+
+:host {
+	cursor: pointer;
+	height: 100%;
+
+	.menu-item-link {
+		height: 100%;
+		text-decoration: none;
+	}
+
+	.menu-item-container {
+		height: 100%;
+		position: relative;
+
+		.menu-item {
+			align-items: center;
+			display: flex;
+			height: 100%;
+			min-height: 2rem;
+			justify-content: center;
+			min-width: 5rem;
+			padding: 0 0.5rem;
+			text-align: center;
+
+			&.expanded, &:hover, &:focus {
+				background-color: $primary;
+
+				.menu-item-title {
+					color: white;
+				}
+			}
+
+			&-title {
+				$title-font-size: 1.125rem;
+				color: $primary;
+				font-size: $title-font-size;
+				height: $title-font-size;
+				text-transform: uppercase;
+
+				&.root-item-title {
+					align-self: flex-end;
+					padding-bottom: $top-panel-logo-offset;
+				}
+			}
+		}
+
+		.menu-list {
+			display: block;
+			min-width: 100%;
+			position: absolute;
+
+			&.up {
+				left: 0;
+				top: 0;
+				transform: translate(0, -100%);
+			}
+
+			&.down {
+				left: 0;
+				bottom: 0;
+				transform: translate(0, 100%);
+			}
+
+			&.left {
+				left: 0;
+				top: 0;
+				transform: translate(-100%, 0);
+			}
+
+			&.right {
+				right: 0;
+				top: 0;
+				transform: translate(100%, 0);
+			}
+		}
+	}
+}

@@ -1,0 +1,409 @@
+#!groovy
+
+node {
+    /*setup constants*/
+    registry_name = "datamolahub"
+    registry_url = "https://${registry_name}/v1/" // Private Registry
+    registry_creds_id = "amc_docker_build" // name of the Jenkins Credentials ID
+
+    deploy_cloud_ip = "75.126.211.182"
+    deploy_cloud_user = "amcdashboard"
+    deploy_cloud_creds_id = "amc_stage_cloud"
+    deploy_repo_name = "20_docker_deploy"
+    deploy_script_name = "manage_containers_swarm.sh"
+
+    currentBuild.result = 'SUCCESS'
+    notifyBuild('STARTED')
+
+    try {
+
+        stage('Checkout') {
+            checkout scm
+        }
+
+        stage('Initialize variables && environment') {
+            /*Set Variables*/
+            env.BUILD_aEMail = gitEmail()
+            //env.BUILD_aBranch = gitBranch()
+            env.BUILD_aBranch = gitBranchShallow()
+            if (env.BUILD_aBranch.toUpperCase().contains('MASTER')) {
+                    env.BUILD_aVersionName = 'release.'
+            } else {
+                    env.BUILD_aVersionName = env.BUILD_aBranch + '.'
+            }
+            env.BUILD_aVersion = gitBuildVersion()
+            env.BUILD_aNum = "${env.BUILD_aVersionName}${BUILD_aVersion}"
+            env.BUILD_aCommitRAW = gitCommit()
+            env.BUILD_aRepoType = gitRepoType()
+            env.BUILD_aCommit = env.BUILD_aCommitRAW.substring(0, 5)
+
+        }
+
+        stage('Prepare') {
+            /*Set prepare Docker Build File */
+            sh 'cp ./images/Dockerfile.gui.bak Dockerfile'
+            sh 'cp ./images/.dockerignore .dockerignore'
+
+            /*Show Folder Content*/
+            sh 'ls -la'
+
+            print "ApplicationName: ${DEFAULT_APPLICATION} \n" +
+                "RepoName: ${env.BUILD_aRepoName} \n" +
+                "RepoPath: ${env.BUILD_aRepoPath} \n" +
+                "RepoType: ${env.BUILD_aRepoType} \n" +
+                "Branch Name: ${env.BUILD_aBranch} \n" +
+                "Commit Build: ${env.BUILD_aNum} \n" +
+                "Commit_ID: ${env.BUILD_aCommit} \n" +
+                "Commit E-Mail: ${env.BUILD_aEMail}"
+        }
+
+        stage('Docker login') {
+            withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: "${registry_creds_id}",
+                              usernameVariable: 'DOCKER_HUB_USERNAME', passwordVariable: 'DOCKER_HUB_PASSWORD']]) {
+                sh "docker login -u '${env.DOCKER_HUB_USERNAME}' -p '${env.DOCKER_HUB_PASSWORD}'"
+            }
+        }
+
+        stage('Build Docker') {
+            sh "docker build --pull -t ${registry_name}/${env.BUILD_aRepoName}:${env.BUILD_aNum}.${env.BUILD_aCommit} --build-arg PROJECT=${DEFAULT_APPLICATION} --build-arg BRANCH=${env.BUILD_aBranch} --build-arg TYPE=${DEFAULT_TYPE} ."
+        }
+
+        stage('Test - Docker Image') {
+            def container_name = "${env.BUILD_aRepoName}.${env.BUILD_aNum}"
+
+            /* Remove Old containers*/
+            sh script: "docker rm -f ${container_name}", returnStatus: true
+            sh "docker run -d --name ${container_name} ${registry_name}/${env.BUILD_aRepoName}:${env.BUILD_aNum}.${env.BUILD_aCommit}"
+            currentBuild.result = testContainer("${container_name}")
+        }
+
+        stage('Save Artifact') {
+            print "RepoName: ${env.BUILD_aRepoName} \n" +
+                "RepoPath: ${env.BUILD_aRepoPath} \n" +
+                "RepoType: ${env.BUILD_aRepoType} \n" +
+                "Commit Build: ${env.BUILD_aNum} \n" +
+                "Commit_ID: ${env.BUILD_aCommit} \n" +
+                "Commit E-Mail: ${env.BUILD_aEMail}"
+
+                sh "docker tag ${registry_name}/${env.BUILD_aRepoName}:${env.BUILD_aNum}.${env.BUILD_aCommit} ${registry_name}/${env.BUILD_aRepoName}:${env.BUILD_aNum}"
+
+                sh "docker push ${registry_name}/${env.BUILD_aRepoName}:${env.BUILD_aNum}.${env.BUILD_aCommit}"
+                sh "docker push ${registry_name}/${env.BUILD_aRepoName}:${env.BUILD_aNum}"
+                // Auto-Push for Non-Production Environments
+
+                if (env.BUILD_aBranch.toUpperCase().contains('MASTER')) {
+                    sh "docker tag ${registry_name}/${env.BUILD_aRepoName}:${env.BUILD_aNum}.${env.BUILD_aCommit} ${registry_name}/${env.BUILD_aRepoName}:release"
+                    sh "docker push ${registry_name}/${env.BUILD_aRepoName}:release"
+                } else {
+                    sh "docker tag ${registry_name}/${env.BUILD_aRepoName}:${env.BUILD_aNum}.${env.BUILD_aCommit} ${registry_name}/${env.BUILD_aRepoName}:${env.BUILD_aBranch}"
+                    sh "docker push ${registry_name}/${env.BUILD_aRepoName}:${env.BUILD_aBranch}"
+                }
+
+            currentBuild.result = 'SUCCESS'
+            notifyBuild('SUCCESSFUL')
+        }
+
+        stage('Docker logout') {
+            sh('docker logout')
+        }
+
+        // Auto Deploy Modules to Non-Production Environments
+        stage('Deploy') {
+                def cmd = ""
+                def cmd2 = ""
+
+                stage("Refresh Deploy Configuration") {
+                    // if (!env.BUILD_aBranch.toUpperCase().contains('MASTER')) {
+                        sshagent(["${deploy_cloud_creds_id}"]) {
+                            //
+                            cmd = "cd ~/${deploy_repo_name};ls -la;git pull -f;chmod +x ${deploy_script_name}"
+                            cmd2 = / ssh -o StrictHostKeyChecking=no ${deploy_cloud_user}@${deploy_cloud_ip} "${cmd}" /
+                            sh cmd2
+                        }
+                    // } else {
+                    //    print "NOTICE: Production Auto-Deploy stage skipped"
+                    // }
+                }
+
+                stage("Deploy Artifacts") {
+                    // if (!env.BUILD_aBranch.toUpperCase().contains('MASTER')) {
+                        sshagent(["${deploy_cloud_creds_id}"]) {
+                            //
+                            cmd = "cd ~/${deploy_repo_name};./${deploy_script_name} -p ${DEFAULT_APPLICATION} -e ${env.BUILD_aBranch} --deploy;"
+                            cmd2 = / ssh -o StrictHostKeyChecking=no ${deploy_cloud_user}@${deploy_cloud_ip} "${cmd}" /
+                            sh cmd2
+                        }
+                    // } else {
+                    //     print "NOTICE: Production Auto-Deploy stage skipped"
+                    // }
+                }
+
+                // Get Detailed Desctiption
+                env.BUILD_DetailedDesctiption = GetApplicationDetails()
+                // Get "Build Mailing List"
+                env.extMailingList_Developers = GetMailingList('maillist_developers.md')
+                env.extMailingList_Managers = GetMailingList('maillist_managers.md')
+
+                currentBuild.result = 'SUCCESS'
+                notifyBuild('PUBLISHED')
+            }
+
+            stage('Notify') {
+                currentBuild.result = 'SUCCESS'
+                notifyBuild('SUCCESSFUL')
+            }
+
+    } catch (err) {
+        currentBuild.result = "FAILURE"
+        notifyBuild(currentBuild.result)
+        throw err
+    }
+}
+
+//************************************************//
+import java.text.SimpleDateFormat
+
+def testContainer(container_name) {
+    def i_attempt = 0
+    def image_status_failure = false
+
+    waitUntil {
+        i_attempt = i_attempt + 1
+        echo "Check Docker Image status Attempt ${i_attempt}"
+        def wait_results = sh(returnStdout: true, script: "docker exec -t ${container_name} lsof -i :8443 | grep LISTEN | wc -l | tr -d '\n'" )
+        echo "Wait Results(${wait_results})"
+
+        if (i_attempt > 20) {
+            image_status_failure = true
+            sh "docker logs ${container_name}"
+            return image_status_failure
+        }
+
+        if ("${wait_results}" == "1") {
+            echo "Server is listening..."
+            return true
+        } else {
+            echo "Server is not listening yet"
+            return false
+        }
+
+    } // end of waitUntil
+
+    /* Remove Old containers*/
+    sh script: "docker rm -f ${container_name}", returnStatus: true
+
+    if (image_status_failure) {
+        echo "Server not started - out check by timeout"
+        currentBuild.result = 'FAILURE'
+        sh "exit -1"
+    }
+
+    return 'SUCCESS'
+}
+
+def gitCommit() {
+    sh "git rev-parse HEAD > GIT_COMMIT-${env.BUILD_NUMBER}"
+    def gitCommit = readFile("GIT_COMMIT-${env.BUILD_NUMBER}").trim()
+    sh "rm -f GIT_COMMIT-${env.BUILD_NUMBER}"
+    return gitCommit
+}
+
+def gitBranchShallow() {
+    def gitBranch = "${DEFAULT_BRANCH}"
+    print gitBranch
+    return gitBranch
+}
+
+def gitBranch() {
+    sh "git rev-parse --abbrev-ref HEAD  > GIT_BRANCH-${env.BUILD_NUMBER}"
+    def gitBranch = readFile("GIT_BRANCH-${env.BUILD_NUMBER}").trim()
+    sh "rm -f GIT_BRANCH-${env.BUILD_NUMBER}"
+    return gitBranch
+}
+
+def gitEmail() {
+    sh "git --no-pager show -s --format='%ae' ${gitCommit()} > GIT_EMAIL-${env.BUILD_NUMBER}"
+    def gitEmail = readFile("GIT_EMAIL-${env.BUILD_NUMBER}").trim()
+    sh "rm -f GIT_EMAIL-${env.BUILD_NUMBER}"
+    return gitEmail
+}
+
+def gitBuildVersion() {
+    // Get Latest tag
+    sh "git rev-list --tags --max-count=1 | xargs -r git describe --tags > GIT_VERSION-${env.BUILD_NUMBER}"
+    def gitVersion = readFile("GIT_VERSION-${env.BUILD_NUMBER}").trim()
+    sh "rm -f GIT_VERSION-${env.BUILD_NUMBER}"
+    return gitVersion
+}
+
+def gitRepoType() {
+    def cmd_p11 = / git remote - v | head - n1 | awk '{print $2} '/
+    def cmd_p1 = / git config --get remote.origin.url /
+    def cmd_p2 = " > GIT_REPO_PATH-${env.BUILD_NUMBER}"
+    sh "${cmd_p1} ${cmd_p2}"
+
+    cmd_p1 = "cat GIT_REPO_PATH-${env.BUILD_NUMBER}"
+    cmd_p11 = $/ | sed 's/.*\///' | sed 's/\.git//' /$
+    cmd_p2 = " > GIT_REPO_NAME-${env.BUILD_NUMBER}"
+    sh "${cmd_p1}${cmd_p11}${cmd_p2}"
+
+    env.BUILD_aRepoName = readFile("GIT_REPO_NAME-${env.BUILD_NUMBER}").trim()
+    env.BUILD_aRepoPath = readFile("GIT_REPO_PATH-${env.BUILD_NUMBER}").trim()
+    print "RepoName: ${env.BUILD_aRepoName}"
+    def gitRepoType = 'N.D.'
+    if (env.BUILD_aRepoName.toUpperCase().contains('_API_')) {
+        gitRepoType = 'API'
+    } else if (env.BUILD_aRepoName.toUpperCase().contains('_GUI_')) {
+        gitRepoType = 'GUI'
+    }
+    sh "rm -f GIT_REPO_NAME-${env.BUILD_NUMBER}"
+    sh "rm -f GIT_REPO_PATH-${env.BUILD_NUMBER}"
+    return gitRepoType
+}
+
+def ContaineripAddress(container_name) {
+    sh "docker inspect ${container_name} | jq -r '.[0].NetworkSettings.IPAddress' > IP_ADDRESS-${env.BUILD_NUMBER}"
+    def ipAddress = readFile("IP_ADDRESS-${env.BUILD_NUMBER}").trim()
+    sh "rm -f IP_ADDRESS-${env.BUILD_NUMBER}"
+    return ipAddress
+}
+
+def PrintEnvVariables() {
+    sh "env > ENV-${env.BUILD_NUMBER}"
+    def PrintEnvVariables = readFile("ENV-${env.BUILD_NUMBER}");
+    sh "rm -f ENV-${env.BUILD_NUMBER}"
+    print PrintEnvVariables
+}
+
+
+def GetApplicationDetails() {
+    // print "Build Detailed Description"
+    def app_description = ""
+    sshagent(["${deploy_cloud_creds_id}"]) {
+
+        cmd= "cat ~/${deploy_repo_name}/${DEFAULT_APPLICATION}/${env.BUILD_aBranch}/README.md"
+        cmd2 = / ssh -o StrictHostKeyChecking=no ${deploy_cloud_user}@${deploy_cloud_ip} "${cmd}" > APPLICATION_DETAILS-${env.BUILD_NUMBER} /
+        sh script: cmd2, returnStatus: true
+        if (fileExists("APPLICATION_DETAILS-${env.BUILD_NUMBER}")) {
+            app_description = readFile("APPLICATION_DETAILS-${env.BUILD_NUMBER}").trim()
+        } else {
+            app_description = ""
+        }
+    }
+    sh "rm -f APPLICATION_DETAILS-${env.BUILD_NUMBER}"
+    return app_description
+}
+
+def GetMailingList(String listName = 'maillist') {
+    def mailFile = ""
+    sshagent(["${deploy_cloud_creds_id}"]) {
+        //
+        def cmd= "cat ~/${deploy_repo_name}/${listName}"
+        def cmd2 = / ssh -o StrictHostKeyChecking=no ${deploy_cloud_user}@${deploy_cloud_ip} "${cmd}" > MAILING_LIST-${env.BUILD_NUMBER} /
+        sh script: cmd2, returnStatus: true
+        if (fileExists("MAILING_LIST-${env.BUILD_NUMBER}")) {
+            mailFile = readFile("MAILING_LIST-${env.BUILD_NUMBER}").trim().replaceAll( '\n', ',' )
+        } else {
+            mailFile = ""
+        }
+    }
+    sh "rm -f MAILING_LIST-${env.BUILD_NUMBER}"
+    return mailFile
+}
+
+def notifyBuild(String buildStatus = 'STARTED') {
+  // build status of null means successful
+  buildStatus =  buildStatus ?: 'SUCCESSFUL'
+
+  def MailList_Developers = "${env.extMailingList_Developers}"
+  def MailList_Managers = "${env.extMailingList_Managers}"
+
+  // Override default values of Mail List distribution group
+  def mailList = "kbucha@datamola.com"
+  env.BUILD_aBranch = env.BUILD_aBranch ?: "${DEFAULT_BRANCH}"
+  if ((buildStatus == 'PUBLISHED') && (env.BUILD_aBranch.toUpperCase().contains('MASTER'))) {
+      mailList = "${mailList},${MailList_Managers},${MailList_Developers}"
+  } else {
+      mailList = "${mailList},${MailList_Developers}"
+  }
+
+  def dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm")
+  def date = new Date()
+  def build_date = dateFormat.format(date)
+
+  def artifact_commit = "N.A."
+  def artifact_build = "${registry_name}/${env.BUILD_aRepoName}:${env.BUILD_aNum}"
+  def artifact_latest = "${registry_name}/${env.BUILD_aRepoName}:${env.BUILD_aBranch}"
+  if (env.BUILD_aBranch.toUpperCase().contains('MASTER')) {
+    artifact_commit = "${registry_name}/${env.BUILD_aRepoName}:${env.BUILD_aNum}.${env.BUILD_aCommit}"
+  }
+
+  // Default values
+  def colorName = 'RED'
+  def colorCode = '#FF0000'
+  def subject = "[AMC][BUILD][${DEFAULT_APPLICATION}] ${buildStatus}: Job ${env.JOB_NAME} [${env.BUILD_NUMBER}]"
+
+  def msg_main_description  =  env.BUILD_DetailedDesctiption ?: "<p>Project: ${DEFAULT_APPLICATION} </p><p>Branch Name: ${env.BUILD_aBranch} </p>"
+  def msg_slack_description = msg_main_description.replaceAll( '</p>', '\n' ).replaceAll("<(.|\n)*?>", '')
+
+  def summary = "${subject} \n (${env.BUILD_URL})"
+  if (buildStatus == 'PUBLISHED') {
+    summary = "${summary} \n ${msg_slack_description}"
+  }
+
+  def details = """<p><b> ${buildStatus}: Job ${env.JOB_NAME} [${env.BUILD_NUMBER}]</b></p>
+<p> Check console output at <a href='${env.BUILD_URL}'>${env.JOB_NAME} [${env.BUILD_NUMBER}]</a></p>
+<p></p>
+${msg_main_description}
+<p></p>
+<p> Project: ${DEFAULT_APPLICATION} </p>
+<p> Date of build: ${build_date} </p>
+<p> RepoName: ${env.BUILD_aRepoName}</p>
+<p> RepoPath: ${env.BUILD_aRepoPath}</p>
+<p> RepoType: ${env.BUILD_aRepoType}</p>
+<p> Branch Name: ${env.BUILD_aBranch}</p>
+<p> Commit Build: ${env.BUILD_aNum} </p>
+<p> Commit_ID: ${env.BUILD_aCommit} </p>
+<p> Commit E-Mail: ${env.BUILD_aEMail}</p>
+<p></p>
+<p><b> ARTIFACTS </b></p>
+<p>   Images:</p>
+<p>          Latest: ${artifact_latest}</p>
+<p>         Version: ${artifact_build}</p>
+<p>          Commit: ${artifact_commit}</p>
+"""
+
+
+  // Override default values based on build status
+  if (buildStatus == 'STARTED') {
+    color = 'YELLOW'
+    colorCode = '#FFFF00'
+  } else if ((buildStatus == 'SUCCESSFUL') || (buildStatus == 'PUBLISHED')) {
+    color = 'GREEN'
+    colorCode = '#00FF00'
+  } else {
+    color = 'RED'
+    colorCode = '#FF0000'
+  }
+
+  // Send notifications
+  slackSend (color: colorCode, message: summary)
+
+  if (buildStatus == 'PUBLISHED') {
+    // Send EMail All Success
+    emailext (
+      subject: subject,
+      body: details,
+      recipientProviders: [[$class: 'DevelopersRecipientProvider']],
+      to : "${mailList}"
+    )
+  } else {
+    // Send EMail with non-Success Status
+    emailext (
+      subject: subject,
+      body: details,
+      recipientProviders: [[$class: 'DevelopersRecipientProvider']],
+      to : "kbucha@datamola.com"
+    )
+  }
+}

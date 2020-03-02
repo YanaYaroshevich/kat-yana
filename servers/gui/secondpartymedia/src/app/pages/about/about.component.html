@@ -1,0 +1,12 @@
+<article *ngIf="article" [id]="article.LINK" class="content-container" [ngClass]="article.THEME">
+	<div class="content-container-inner">
+		<rounded-card [text]="article.TEXT"></rounded-card>
+	</div>
+</article>
+
+<div class="map-container">
+	<a class="map-link" [href]="mapLink" target="_blank" rel="noopener noreferrer">
+		<img class="map-image" src="assets/images/map.png" alt="Our address">
+		<div class="map-cover"></div>
+	</a>
+</div>

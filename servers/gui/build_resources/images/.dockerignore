@@ -1,0 +1,7 @@
+ .git
+ .gitignore
+ .idea
+ Dockerfile
+ .dockerignore
+# config.js
+node_modules

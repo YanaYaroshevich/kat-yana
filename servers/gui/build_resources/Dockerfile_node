@@ -1,0 +1,17 @@
+FROM datamolahub/base-jre:v.8.1
+
+ENV REFRESH_DATE 18-09-2018
+
+ARG PROJECT
+ARG BRANCH
+ARG TYPE
+
+ENV APP_PATH /usr/src/app/
+RUN mkdir -p ${APP_PATH}
+
+WORKDIR  ${APP_PATH}
+
+RUN curl http://artifacts.datamola.com/repository/builds_npm/${PROJECT}_${BRANCH}_${TYPE}_npm_debian.tar.gz \
+  | tar -xzC ${APP_PATH}
+
+EXPOSE 8443

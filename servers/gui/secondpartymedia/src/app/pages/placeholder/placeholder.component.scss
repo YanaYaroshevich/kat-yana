@@ -1,0 +1,56 @@
+@import 'vars/colors';
+@import 'vars/sizes';
+
+:host {
+	align-items: center;
+	color: $primary-text-color;
+	display: flex;
+	flex-direction: column;
+	height: 100vh;
+	justify-content: space-between;
+
+	.container {
+		&-top {
+			align-items: center;
+			display: flex;
+			flex-direction: column;
+
+			.contact-info {
+				display: flex;
+				flex-direction: column;
+				z-index: 1;
+
+				&-item {
+					align-items: center;
+					color: $sub-color-blue;
+					display: flex;
+					font-size: .8rem;
+					margin-top: .5rem;
+					text-decoration: none;
+
+					&-icon {
+						font-size: $footer-icon-size;
+					}
+
+					&-text:hover {
+						text-decoration: underline;
+					}
+				}
+			}
+		}
+
+		&-middle {
+			align-items: center;
+			color: $primary;
+			display: flex;
+			height: 100vh;
+			justify-content: center;
+			position: absolute;
+			width: 100vw;
+		}
+
+		&-bottom {
+			margin-bottom: 1.5rem;
+		}
+	}
+}

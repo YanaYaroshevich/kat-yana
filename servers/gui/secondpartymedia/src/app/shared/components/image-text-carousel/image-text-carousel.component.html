@@ -1,0 +1,48 @@
+<div *ngIf="items" class="carousel-item-container" @appearTrigger>
+	<div class="carousel-item">
+		<div class="carousel-item-figures-container">
+			<figure
+				*ngFor="let item of items; index as index"
+				class="carousel-item-image-container {{ item.LINK }}"
+				[@moveFigureTrigger]="animationStateForIndex(index)"
+			>
+				<img class="carousel-item-image" [src]="getImgUrlForItem(item)" [alt]="item.TITLE" />
+
+				<div class="carousel-text-container">
+					<div class="carousel-text">
+						<h4 class="carousel-text-title" title="Download PDF"></h4>
+						<p class="carousel-text-subtitle">{{ item.SUBTITLE }}</p>
+						<p class="carousel-text-content" [innerHTML]="item.TEXT"></p>
+					</div>
+				</div>
+			</figure>
+		</div>
+	</div>
+	<ng-container *ngIf="items.length > 1">
+		<div class="carousel-item-switch-button prev" (click)="switchToPrev()">
+			<div class="carousel-item-switch-button-arrow-wrapper">
+				<div class="carousel-item-switch-button-arrow prev">&#9664;</div>
+			</div>
+		</div>
+
+		<div class="carousel-item-switch-button next" (click)="switchToNext()">
+			<div class="carousel-item-switch-button-arrow-wrapper">
+				<div class="carousel-item-switch-button-arrow next">&#9654;</div>
+			</div>
+		</div>
+	</ng-container>
+</div>
+
+<div *ngIf="items" class="responsive-carousel-item-container">
+	<div *ngFor="let item of items; index as index" class="responsive-carousel-item-image-container {{ item.LINK }}">
+		<img class="responsive-carousel-item-image" [src]="getImgUrlForItem(item)" [alt]="item.TITLE" />
+
+		<div class="carousel-text-container">
+			<div class="carousel-text">
+				<h4 class="carousel-text-title" title="Download PDF"></h4>
+				<p class="carousel-text-subtitle">{{ item.SUBTITLE }}</p>
+				<p class="carousel-text-content" [innerHTML]="item.TEXT"></p>
+			</div>
+		</div>
+	</div>
+</div>

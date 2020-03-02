@@ -1,0 +1,19 @@
+FROM datamolahub/base-app-builds
+
+ARG PROJECT
+ARG BRANCH
+ARG TYPE
+
+ENV APP_PATH /usr/src/app/
+RUN mkdir -p ${APP_PATH}
+
+WORKDIR  ${APP_PATH}
+
+RUN curl http://artifacts.datamola.com/repository/builds_npm/${PROJECT}_${BRANCH}_${TYPE}_npm_debian.tar.gz \
+  | tar -xzC ${APP_PATH}
+
+COPY . .
+
+EXPOSE 8443
+
+CMD node servers/gui/server.js

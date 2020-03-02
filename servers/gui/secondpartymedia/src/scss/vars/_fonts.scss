@@ -1,0 +1,30 @@
+@import './sizes';
+
+%heading {
+	font-size: 3.75rem;
+	font-weight: 900;
+	line-height: 4.375rem;
+}
+
+%sub-heading {
+	font-size: 1.5625rem;
+	font-weight: 900;
+	line-height: 2.1875rem;
+}
+
+%paragraph-text {
+	font-size: 16px;
+	font-weight: normal;
+	line-height: 22px;
+
+	@media only screen and (min-device-width: $ipad-min-device-width) and (max-device-width: $ipad-max-device-width) and (orientation: portrait) {
+		font-size: 20px;
+		line-height: 27px;
+	}
+}
+
+%hint {
+	font-size: 10px;
+	font-weight: normal;
+	line-height: 9.3px;
+}

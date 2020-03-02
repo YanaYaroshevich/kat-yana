@@ -1,0 +1,33 @@
+<ng-container *ngIf="shouldDisplayPlaceholder; then placeholder else content"></ng-container>
+
+<ng-template #placeholder>
+	<placeholder [copyrightYear]="currentYear"></placeholder>
+</ng-template>
+
+<ng-template #content>
+	<header>
+		<top-panel></top-panel>
+	</header>
+	<main>
+		<router-outlet></router-outlet>
+	</main>
+	<footer class="footer">
+		<address class="footer-contact-info">
+			<div class="footer-text">
+				Copyright © {{currentYear}}
+			</div>
+			<a class="footer-contact-info-item" [href]="CONTACTS.PHYSICAL_ADDRESS.REAL">
+				<img class="footer-contact-info-item-icon" [src]="'assets/icons/' + CONTACTS.PHYSICAL_ADDRESS.ICON" alt="Addr.: ">
+				<span class="footer-contact-info-item-text">{{CONTACTS.PHYSICAL_ADDRESS.DISPLAYED}}</span>
+			</a>
+			<a class="footer-contact-info-item" [href]="CONTACTS.PHONE_NUM.REAL">
+				<img class="footer-contact-info-item-icon" [src]="'assets/icons/' + CONTACTS.PHONE_NUM.ICON" alt="Tel.: ">
+				<span class="footer-contact-info-item-text">{{CONTACTS.PHONE_NUM.DISPLAYED}}</span>
+			</a>
+			<a class="footer-contact-info-item" [href]="CONTACTS.E_MAIL.REAL">
+				<img class="footer-contact-info-item-icon" [src]="'assets/icons/' + CONTACTS.E_MAIL.ICON" alt="E-mail: ">
+				<span class="footer-contact-info-item-text">{{CONTACTS.E_MAIL.DISPLAYED}}</span>
+			</a>
+		</address>
+	</footer>
+</ng-template>

@@ -1,0 +1,100 @@
+@import 'vars/colors';
+@import 'vars/fonts';
+@import 'vars/sizes';
+
+:host {
+	$max-responsive-width: $center-container-width;
+
+	display: flex;
+	flex-direction: column;
+	height: calc(100vh - #{$footer-height});
+	overflow: hidden;
+
+	.content {
+		&-container {
+			align-items: center;
+			box-sizing: border-box;
+			display: flex;
+			padding: ($top-panel-height + 2rem) 0 2rem;
+
+			&-inner {
+				align-items: center;
+				display: flex;
+				margin: auto;
+				max-width: $max-responsive-width;
+			}
+
+			rounded-card {
+				width: calc(#{$rounded-card-size} + 200px);
+				box-sizing: border-box;
+			}
+
+			.article-text {
+				@extend %heading;
+				flex: 1;
+				padding-right: 20px;
+			}
+
+			::ng-deep {
+				.rounded-card {
+					height: min-content;
+				}
+			}
+
+			@mixin rounded-card-style($background, $text, $article-text) {
+				::ng-deep {
+					.rounded-card {
+						background: $background;
+						color: $text;
+					}
+
+					.article-text {
+						color: $article-text;
+					}
+				}
+			}
+
+			&.blue-gradient {
+				@include rounded-card-style(linear-gradient(135deg, $sub-color-blue 0%, $sub-color-violet 100%), #fff, $sub-color-blue-2);
+				background: white; // to overlap parallaxes
+			}
+
+			&.orange-gradient {
+				@include rounded-card-style(linear-gradient(135deg, $sub-color-violet 0%, $sub-color-orange 100%), #fff, $sub-color-orange);
+				background: white; // to overlap parallaxes
+			}
+
+			&.simple-white {
+				@include rounded-card-style(#fff, #000, #fff);
+				background: linear-gradient(152.02deg, $sub-color-blue 0%, $sub-color-violet 100%);
+			}
+		}
+	}
+
+	.map {
+		&-container {
+			overflow: hidden;
+		}
+
+		&-link {
+			align-items: center;
+			display: flex;
+			justify-content: center;
+			height: 100%;
+			position: relative;
+		}
+
+		&-image {
+			display: block;
+			object-fit: cover;
+			width: 100%;
+		}
+
+		&-cover {
+			background-color: rgba($primary, .5);
+			height: 100%;
+			position: absolute;
+			width: 100%;
+		}
+	}
+}
