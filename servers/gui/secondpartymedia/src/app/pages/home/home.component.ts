@@ -70,7 +70,9 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewChecked {
 	}
 
 	ngAfterViewChecked(): void {
-		this.generalService.videoWidth.next(this.introVideo.nativeElement.clientWidth);
+		setTimeout(() => {
+			this.generalService.videoWidth.next(this.introVideo.nativeElement.clientWidth);
+		});
 	}
 
 	ngOnDestroy() {

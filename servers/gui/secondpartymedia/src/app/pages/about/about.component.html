@@ -1,3 +1,11 @@
+<article class="content-container top-video-container" style="visibility: hidden; position: absolute;">
+	<img #introVideo class="top-video-image" src="assets/images/main.jpg" alt="FreshU Main Image"/>
+
+	<div class="top-video-text-container">
+		<h2 class="article-text top-video-text">Продажа моющих и дезинфицирующих средств от качественного производителя</h2>
+	</div>
+</article>
+
 <article *ngIf="article" [id]="article.LINK" class="content-container" [ngClass]="article.THEME">
 	<div class="content-container-inner">
 		<rounded-card [text]="article.TEXT"></rounded-card>
