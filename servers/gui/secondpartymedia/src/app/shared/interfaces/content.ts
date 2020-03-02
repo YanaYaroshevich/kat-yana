@@ -15,4 +15,5 @@ export interface CAROUSEL_ITEM {
 	};
 	LINK?: string;
 	DOCUMENT: string;
+	PRICE: string;
 }
