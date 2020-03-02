@@ -21,19 +21,19 @@ export class TopPanelComponent implements OnDestroy {
 
 	testItems: DropDownMenuItem[] = [
 		{
-			title: 'Информация',
+			title: 'Полезно знать',
 			items: [
 				{
-					title: '2nd Party Media',
-					link: '#party_media'
+					title: 'ВОЗ рекомендует',
+					link: '#voz'
 				},
 				{
-					title: 'What we do',
-					link: '#what'
+					title: 'Хим. состав',
+					link: '#contents'
 				},
 				{
-					title: 'How we do it',
-					link: '#how'
+					title: 'Применение',
+					link: '#apply'
 				}
 			]
 		},
@@ -41,37 +41,17 @@ export class TopPanelComponent implements OnDestroy {
 			title: 'Продукты',
 			items: [
 				{
-					title: 'Aurora VTS',
-					link: '.AURORA_VTS'
+					title: 'Триосепт-ОЛ 100мл',
+					link: '.TRISEPTOL-100'
 				},
-				{
-					title: 'Aurora',
-					link: '.AURORA'
-				},
-				{
-					title: 'Mediator',
-					link: '.MEDIATOR'
-				},
-				{
-					title: 'Bart',
-					link: '.BART'
-				},
-				{
-					title: 'Estimator',
-					link: '.ESTIMATOR'
-				},
-				{
-					title: 'PAT',
-					link: '.PAT'
-				},
-				{
-					title: 'SVOD',
-					link: '.SVOD'
-				},
-				{
-					title: 'PPM',
-					link: '.PPM'
-				}
+                {
+                    title: 'Триосепт-ОЛ 1л',
+                    link: '.TRISEPTOL-1000'
+                },
+                {
+                    title: 'Триосепт-ОЛ 1л с дозатором',
+                    link: '.TRISEPTOL-1000-special'
+                }
 			]
 		},
 		{
@@ -157,6 +137,6 @@ export class TopPanelComponent implements OnDestroy {
 	}
 
 	private widthForNavGroup(navGroup: DropDownMenuItem) {
-		return `${navGroup.items.length / 2 * 10 + 10 + 7.5 / 4}rem`;
+		return `${navGroup.items.length / 2 * 20 + 10 + 7.5 / 4}rem`;
 	}
 }

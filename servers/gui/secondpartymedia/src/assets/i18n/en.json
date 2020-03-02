@@ -1,100 +1,55 @@
 {
 	"ARTICLES": {
-		"2nd Party Media": {
-			"TITLE": "Our solutions will drive the next generation of TV and Video platforms",
-			"TEXT": "2nd Party Media is a leading data science software company that provides licensed Linear TV and Video Measurement, Performance, and Buying solutions to Brands, Agencies, Technology Platforms, and Media companies. Beyond just traditional demos, the wealth of granular viewer data is fueling advertisers&apos; ability to reach their desired audiences with greater efficiency and precision. It is also driving media companies, agencies, and technology platform builders to provide tools to not only find these audiences but properly value them in optimal ways for both supply and demand sides.<br/><br/>2nd Party Media has the products, ingredients, development resources, and in-market solutions that will drive the next generations of TV and Video platforms.",
+		"ВОЗ рекомендует": {
+			"TITLE": "Основные меры предосторожности от ВОЗ",
+			"TEXT": "Регулярно мойте руки или обрабатывайте их спиртосодержащим средством- антисептиком. Если вирус окажется на поверхности рук такие меры его устранят.<br><br>При кашле и чихании прикрывайте рот и нос салфеткой или сгибом локтя; сразу выкидывайте салфетку в контейнер для мусора с крышкой. После этого не поленитесь снова помыть руки или воспользуйтесь антисептиком.<br><br>Прикрывание рта и носа при кашле и чихании позволяет предотвратить распространение вирусов и других болезнетворных микроорганизмов. Если при кашле или чихании прикрывать нос и рот рукой, микробы могут попасть на ваши руки, а затем на предметы или людей, к которым вы прикасаетесь.",
 			"THEME": "blue-gradient",
-			"LINK": "party_media"
+			"LINK": "voz"
 		},
-		"What We Do": {
-			"TITLE": "Essential software that is ready for adoption and deployment",
-			"TEXT": "We have seven, market-proven platforms that enable our partners to rapidly adapt them for their businesses. We provide source code, development resources, and turn-key software solutions based on our partners specific needs. With an ever-expanding slate of linear programming data sources for the market, understanding where to reach desired consumers is more important than ever.<br/><br/>So whether you are developing a proprietary marketing stack for your brand; solving an internal business reporting and business management problem; looking for next-generation research platforms to give you faster, more efficient reporting; or you are building and selling solutions that solve these problems for the media market, 2nd Party Media has the essential software ready for adoption and deployment.",
+		"Химический состав": {
+			"TITLE": "Сбалансированный состав для максимальной защиты",
+			"TEXT": "«Триосепт – Ол» - это высокотехнологичное антисептическое средство для обработки кожи, которое содержит в своём составе спирты высокого качества. Средство необходимо в местах, где обязательно требуется соблюдать санитарные нормы гигиены.<br><br>«Триосепт - Ол» содержит в своем составе в качестве действующих веществ алкилдиметилбензиламмония хлорид – 0,075%, дидецилдиметиламмония хлорид – 0,025%, изопропанол – 40%, н-пропанол – 35%, а также увлажняющие и смягчающие добавки; рН средства – 7,0.",
 			"THEME": "simple-white",
-			"LINK": "what"
+			"LINK": "contents"
 		},
-		"How We Do It": {
-			"TITLE": "Providing live demonstrations for any of our platforms",
-			"TEXT": "2nd Party Media can provide live demonstrations for any of our seven platforms. We will then engage with our partners&apos; business owners, product managers and developers to define the essential licenses and development resources required to deliver a customized version of any our products.<br/><br/>Our products are browser-based, flexible, SaaS-designs and have De-Coupled and Open Data extensions. These allow rapid adoption into any cloud-based environment with maximum flexibility for customization. So, whether you want one of our products “turn-key” to be adopted for your company&apos;s use, or you want to incorporate / extend one of your company&apos;s existing products and re-sell to other 3rd parties, 2nd Party Media will adapt. Additionally, products come with 3rd level support, and optionally with 1st and 2nd level support.",
+		"Применение": {
+			"TITLE": "В каких областях можно применять «Триосепт – Ол»?",
+			"TEXT": "В быту населением, Парикмахерские, Косметические и (или) массажные салоны,  Детские учреждения (детсады, школы и т.п.), Предприятия общественного питания, Предприятия продовольственной торговли, Потребительские рынки, Коммунальные объекты (бани, бассейны, гостиницы, общественные туалеты и т.п.), Учреждения соцобеспечения,  Предприятия фармацевтической промышленности.",
 			"THEME": "orange-gradient",
-			"LINK": "how"
+			"LINK": "apply"
 		}
 	},
 	"TOP_CAROUSEL": [
 		{
-			"LINK": "AURORA",
-			"TITLE": "Aurora",
+			"LINK": "TRISEPTOL-100",
+			"TITLE": "«Триосепт – Ол» 100мл",
 			"SUBTITLE": "",
-			"TEXT": "<strong>Aurora</strong> is a web-based audience <strong>Planning Platform</strong> that utilizes industry-accepted data-sets to find and plan minute-by-minute advanced audiences across both Linear TV and digital campaigns.<br><br>We designed <strong>Aurora</strong> to find the precise characteristics at the household and program level, which not only uses established Nielsen, Claritas, and MVPD 3rd party-data but allows for 1st party audience data and on-ramps to planning on digital demand-side platforms.",
+			"TEXT": "",
 			"IMAGES": {
-				"DEVICE": "aurora.png"
+				"DEVICE": "triseptol-100.jpeg"
 			}
 		},
 		{
-			"LINK": "MEDIATOR",
-			"TITLE": "Mediator",
+			"LINK": "TRISEPTOL-1000",
+			"TITLE": "«Триосепт – Ол» 1л",
 			"SUBTITLE": "",
-			"TEXT": "<strong>Mediator</strong> is a linear TV and digital video Advanced Audience Targeting and <strong>Buying Platform</strong>.<br><br>We constructed <strong>Mediator</strong> to marry all the industry-accepted advanced targeting data-sets, across the Linear TV universe, with customizable extensions, to create a buying environment for Intelligent Negotiations&trade; around TV and digital video inventory.",
+			"TEXT": "",
 			"IMAGES": {
-				"DEVICE": "mediator.png"
+				"DEVICE": "triseptol-1000.jpg"
 			}
 		},
 		{
-			"LINK": "BART",
-			"TITLE": "BART",
-			"SUBTITLE": "Business Analysis Research Tool",
-			"TEXT": "<strong>BART</strong> is a linear TV and OTT / Digital <strong>Research Platform</strong>.<br><br>We built <strong>BART</strong> to create efficiencies and allow out team to focus on generating our truly most valuable asset: Insights about our audiences and viewership.",
-			"IMAGES": {
-				"DEVICE": "bart.png"
-			}
-		},
-		{
-			"LINK": "ESTIMATOR",
-			"TITLE": "Estimator",
+			"LINK": "TRISEPTOL-1000-special",
+			"TITLE": "«Триосепт – Ол» 1л с дозатором",
 			"SUBTITLE": "",
-			"TEXT": "<strong>Estimator</strong> is a linear TV software platform which helps TV companies make <strong>Intelligent and Accurate Estimates</strong> of all aspects of audience and viewership.<br><br>We created <strong>Estimator</strong> to radically modernize the way media companies forecast performance of shows, programs, and events for various departments – including Pricing & Inventory, Programming, Scheduling, Sales, Research and Finance.",
+			"TEXT": "",
 			"IMAGES": {
-				"DEVICE": "estimator.png"
-			}
-		},
-		{
-			"LINK": "PAT",
-			"TITLE": "PAT",
-			"SUBTITLE": "Promo Allocations Tool",
-			"TEXT": "<strong>PAT</strong> is a quantitative research and planning tool to allow Linear TV media companies to <strong>Optimize Promotional and Barter Inventory</strong>.<br><br><strong>PAT</strong> solves the problem of targeting, valuation, efficiency of decision-making, and transparency, on an audience minute-by-minute, program level, so all departments in a media company – marketing, programming, promo, research and finance - can maximize the value of promotional TV inventory.",
-			"IMAGES": {
-				"DEVICE": "pat.png"
-			}
-		},
-		{
-			"LINK": "SVOD",
-			"TITLE": "SVOD",
-			"SUBTITLE": "Aurora Subscription Video On-Demand",
-			"TEXT": "<strong>Aurora SVOD</strong> is a comprehensive <strong>Business Analysis Dashboard</strong> which captures all the streaming and on-demand business metrics for a media owner into one comprehensive “source of truth”.<br><br><strong>Aurora SVOD</strong> is designed to cover every aspect of performance for a multi-platform video streaming and on-demand business, accounting for Churn, Acquisition, Retention, Engagement and Content performance. These metrics then translate into analyses that create actionable audience and behavioral segments, look-a-like modeling, and subscriber acquisition campaign management tools.",
-			"IMAGES": {
-				"DEVICE": "psvod.png"
-			}
-		},
-		{
-			"LINK": "PPM",
-			"TITLE": "PPM",
-			"SUBTITLE": "Planning and Performance Marketing",
-			"TEXT": "<strong>PPM</strong> is a <strong>Performance Marketing Platform</strong> that measures all video performance across linear TV and digital, combining paid, promotional and organic channels.<br><br><strong>PPM</strong> is designed to improve the most important success factors for marketers running multiple creative video assets, across disparate and myriad channels, paid or organic, digital or linear. We combine the metrics, asset-by-asset, week-to-week, channel-by-channel into several high-impact visualization tools and equalize the value of each based on a sophisticated Enpressions&trade; calculations accounting for environment, recency, engagement and reach.",
-			"IMAGES": {
-				"DEVICE": "ppm.png"
-			}
-		},
-		{
-			"LINK": "AURORA_VTS",
-			"TITLE": "Aurora VTS",
-			"SUBTITLE": "Video Targeting Solutions",
-			"TEXT": "This is our Flagship platform. Although our products have very many differences, they all currently operate off the AuroraVTS.com domain<br>(e.g. <a href=\"pat.auroravts.com\">pat.auroravts.com</a>).",
-			"IMAGES": {
-				"DEVICE": "login.png"
+				"DEVICE": "triseptol-1000-special.jpg"
 			}
 		}
 	],
 	"ABOUT": {
-		"TITLE": "About Us",
+		"TITLE": "О Производителе",
 		"TEXT": "ООО «НПО «СпецСинтез»<br>Один из ведущих отечественных разработчиков и производитель профессиональных моющих и дезинфицирующих средств для медицины, ветеринарии и пищевой промышленности.<br><br>Компания ведет свою историю с 2004 года. Первые сотрудники компании, инженеры-химики с технологической научной базой, решили применить свои знания в практической сфере. Основатели стояли у истоков внедрения профессиональной химии на предприятиях РФ Первое направление продаж – медицинское.<br><br>Постепенно стало понятно, что продукция может быть применима в более широких областях, а именно в ветеринарии, коммерческом клининге и пищевой безопасности.<br><br>С самого начала компанию привлекали разработка и исследования. Поэтому многие средства в ассортименте явились результатом «разработки под клиента».<br>Благодаря поиску новейших инновационных компонентов в ассортименте появились хиты продаж, не имеющие аналогов на рынке. Научный подход к разработке компании привлекает в команду ученых, специалистов в областях химии, медицины, ветеринарии, микробиологии.<br><br>В 2010 году компания начала экспортные поставки в Беларусь, а несколькими годами позднее и в Казахстан.",
 		"THEME": "simple-white",
 		"LINK": "about"

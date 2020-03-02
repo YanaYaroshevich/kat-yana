@@ -7,7 +7,6 @@
 
 	display: flex;
 	flex-direction: column;
-	height: calc(100vh - #{$footer-height});
 	overflow: hidden;
 
 	.content {
@@ -15,6 +14,7 @@
 			align-items: center;
 			box-sizing: border-box;
 			display: flex;
+			height: 100vh;
 			padding: ($top-panel-height + 2rem) 0 2rem;
 
 			&-inner {

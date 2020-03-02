@@ -1,6 +1,6 @@
-const email = 'hello@2ndpartymedia.com';
-const phone = '415-350-5860';
-const address = '11 Pennsylvania Ave, New York, NY 10001';
+const email = 'K.jsvmed@gmail.com';
+const phone = '+375293550007';
+const address = 'д.Тарасово, ул.Ратомская 1Б, помещ.404';
 
 const E_MAIL = {
 	DISPLAYED: email,
@@ -16,7 +16,7 @@ const PHONE_NUM = {
 
 const PHYSICAL_ADDRESS = {
 	DISPLAYED: address,
-	REAL: 'https://www.google.com/maps/place/11+Pennsylvania+Plaza,+New+York,+NY+10001,+USA',
+	REAL: 'https://goo.gl/maps/SNYxgoz3hgNfVbML8',
 	ICON: 'location.png'
 };
 
