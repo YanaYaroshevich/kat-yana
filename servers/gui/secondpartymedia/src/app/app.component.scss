@@ -9,7 +9,7 @@
 
 	header {
 		position: fixed;
-		width: 100%;
+		width: 100vw;
 		z-index: 1;
 	}
 
@@ -25,7 +25,7 @@
 		background-color: $primary;
 		color: white;
 		padding: $footer-padding 0;
-		width: 100%;
+		width: 100vw;
 
 		&-text, &-contact-info-item-text {
 			height: $footer-font-size;

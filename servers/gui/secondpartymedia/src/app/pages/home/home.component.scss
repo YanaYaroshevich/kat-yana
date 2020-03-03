@@ -13,7 +13,7 @@
 			align-items: center;
 			box-sizing: border-box;
 			display: flex;
-			height: $content-container-height;
+			min-height: $content-container-height;
 			padding: $content-container-padding;
 
 			&.pdf-container {
@@ -113,6 +113,7 @@
 			}
 
 			&.without-padding {
+				height: $content-container-height;
 				padding: 0;
 			}
 		}
