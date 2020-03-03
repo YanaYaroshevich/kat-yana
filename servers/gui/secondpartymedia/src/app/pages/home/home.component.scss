@@ -16,6 +16,16 @@
 			height: $content-container-height;
 			padding: $content-container-padding;
 
+			&.pdf-container {
+				display: flex;
+				justify-content: center;
+				height: auto;
+
+				img {
+					width: 60%;
+				}
+			}
+
 			&-inner {
 				align-items: center;
 				display: flex;

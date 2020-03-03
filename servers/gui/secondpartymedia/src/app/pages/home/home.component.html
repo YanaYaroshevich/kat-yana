@@ -1,36 +1,63 @@
 <article class="content-container top-video-container">
-	<img #introVideo class="top-video-image" src="assets/images/main.jpg" alt="FreshU Main Image"/>
+  <img
+    #introVideo
+    class="top-video-image"
+    src="assets/images/main.jpg"
+    alt="FreshU Main Image"
+  />
 
-	<div class="top-video-text-container">
-		<h2 class="article-text top-video-text">Продажа моющих и дезинфицирующих средств от качественного производителя</h2>
-	</div>
+  <div class="top-video-text-container">
+    <h2 class="article-text top-video-text">
+      Продажа моющих и дезинфицирующих средств от качественного производителя
+    </h2>
+  </div>
 </article>
 
-<article *ngIf="articles && articles.length" [id]="articles[0].LINK" class="content-container" [ngClass]="articles[0].THEME">
-	<div class="content-container-inner">
-		<div class="article-text">{{articles[0].TITLE}}</div>
-		<rounded-card [text]="articles[0].TEXT"></rounded-card>
-	</div>
+<article
+  *ngIf="articles && articles.length"
+  [id]="articles[0].LINK"
+  class="content-container"
+  [ngClass]="articles[0].THEME"
+>
+  <div class="content-container-inner">
+    <div class="article-text">{{ articles[0].TITLE }}</div>
+    <rounded-card [text]="articles[0].TEXT"></rounded-card>
+  </div>
 </article>
 
-<article *ngIf="articles && articles.length" [id]="articles[1].LINK" class="content-container" [ngClass]="articles[1].THEME">
-	<div class="content-container-inner">
-		<div class="article-text">{{articles[1].TITLE}}</div>
-		<rounded-card [text]="articles[1].TEXT"></rounded-card>
-	</div>
+<article
+  *ngIf="articles && articles.length"
+  [id]="articles[1].LINK"
+  class="content-container"
+  [ngClass]="articles[1].THEME"
+>
+  <div class="content-container-inner">
+    <div class="article-text">{{ articles[1].TITLE }}</div>
+    <rounded-card [text]="articles[1].TEXT"></rounded-card>
+  </div>
 </article>
 
-<article *ngFor="let article of articles.slice(2)" [id]="article.LINK" class="content-container" [ngClass]="article.THEME">
-	<div class="content-container-inner">
-		<div class="article-text">{{article.TITLE}}</div>
-		<rounded-card [text]="article.TEXT"></rounded-card>
-	</div>
+<article
+  *ngFor="let article of articles.slice(2)"
+  [id]="article.LINK"
+  class="content-container"
+  [ngClass]="article.THEME"
+>
+  <div class="content-container-inner">
+    <div class="article-text">{{ article.TITLE }}</div>
+    <rounded-card [text]="article.TEXT"></rounded-card>
+  </div>
 </article>
 
 <article id="solutions" class="content-container without-padding">
-	<image-text-carousel
-		[items]="carouselItems"
-		[currentIndex]="currentSolutionsIndex"
-		(indexChange)="currentSolutionsIndex = $event">
-	</image-text-carousel>
+  <image-text-carousel
+    [items]="carouselItems"
+    [currentIndex]="currentSolutionsIndex"
+    (indexChange)="currentSolutionsIndex = $event"
+  >
+  </image-text-carousel>
+</article>
+
+<article class="content-container pdf-container" id="certificate">
+  <img src="assets/images/pdf.jpg" alt="Certificate" />
 </article>

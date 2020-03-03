@@ -34,6 +34,10 @@ export class TopPanelComponent implements OnDestroy {
 				{
 					title: 'Применение',
 					link: '#apply'
+				},
+				{
+					title: 'Сертификат',
+					link: '#certificate'
 				}
 			]
 		},
