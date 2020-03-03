@@ -24,7 +24,7 @@ export class AboutComponent implements OnDestroy, AfterViewChecked {
 	@ViewChild('introVideo', {static: false}) introVideo: ElementRef;
 	@HostListener('window:resize')
 
-	private readonly articleSubscription: Subscription;
+	public readonly articleSubscription: any;
 	private readonly windowWidthUpdate = new EventEmitter<number>();
 
 	constructor(textContentService: TextContentService, private generalService: GeneralService, private containerRef: ViewContainerRef) {

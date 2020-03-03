@@ -179,6 +179,10 @@
 
 	.footer-contact-info {
 		flex-direction: column;
+
+		.footer-contact-info-item {
+			padding: 1rem 0;
+		}
 	}
 }
 
